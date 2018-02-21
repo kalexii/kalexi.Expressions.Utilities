@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kalexi.Expressions.Utilities", "kalexi.Expressions.Utilities\kalexi.Expressions.Utilities.csproj", "{BCC1A5BF-A8E6-4336-80B7-2F1F0BA0845C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kalexi.Expressions.Utilities.Tests", "kalexi.Expressions.Utilities.Tests\kalexi.Expressions.Utilities.Tests.csproj", "{7C14C3EF-59B0-45DF-B51A-C4AE091C2A48}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{BCC1A5BF-A8E6-4336-80B7-2F1F0BA0845C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCC1A5BF-A8E6-4336-80B7-2F1F0BA0845C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCC1A5BF-A8E6-4336-80B7-2F1F0BA0845C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C14C3EF-59B0-45DF-B51A-C4AE091C2A48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C14C3EF-59B0-45DF-B51A-C4AE091C2A48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C14C3EF-59B0-45DF-B51A-C4AE091C2A48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C14C3EF-59B0-45DF-B51A-C4AE091C2A48}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
