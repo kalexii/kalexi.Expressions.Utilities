@@ -17,6 +17,70 @@ namespace kalexi.Expressions.Utilities
                 : (MemberExpression) bodyExpression;
         }
 
+        #region Getters
+
+        public static Func<object, object> CreateUntypedGetter(this PropertyInfo property)
+        {
+            if (property == null)
+            {
+                throw new ArgumentNullException(nameof(property));
+            }
+            var parameter = Expression.Parameter(typeof(object));
+            var typedParameter = Expression.Convert(parameter, property.DeclaringType);
+            var memberAccess = Expression.MakeMemberAccess(typedParameter, property);
+            var expression = property.PropertyType.IsValueType 
+                ? Expression.Convert(memberAccess, typeof(object)) 
+                : (Expression)memberAccess;
+            var lambda = Expression.Lambda<Func<object, object>>(expression, parameter);
+            return lambda.Compile();
+        }
+
+        public static Func<object, object> CreateUntypedGetter(this FieldInfo field)
+        {
+            if (field == null)
+            {
+                throw new ArgumentNullException(nameof(field));
+            }
+            var parameter = Expression.Parameter(typeof(object));
+            var typedParameter = Expression.Convert(parameter, field.DeclaringType);
+            var memberAccess = Expression.MakeMemberAccess(typedParameter, field);
+            var expression = field.FieldType.IsValueType 
+                ? Expression.Convert(memberAccess, typeof(object)) 
+                : (Expression)memberAccess;
+            var lambda = Expression.Lambda<Func<object, object>>(expression, parameter);
+            return lambda.Compile();
+        }
+
+        public static Func<T, object> CreateGetter<T>(this PropertyInfo property)
+        {
+            if (property == null)
+            {
+                throw new ArgumentNullException(nameof(property));
+            }
+            var parameter = Expression.Parameter(typeof(T));
+            var memberAccess = Expression.MakeMemberAccess(parameter, property);
+            var expression = property.PropertyType.IsValueType 
+                ? Expression.Convert(memberAccess, typeof(object)) 
+                : (Expression)memberAccess;
+            var lambda = Expression.Lambda<Func<T, object>>(expression, parameter);
+            return lambda.Compile();
+        }
+
+        public static Func<T, object> CreateGetter<T>(this FieldInfo field)
+        {
+            if (field == null)
+            {
+                throw new ArgumentNullException(nameof(field));
+            }
+            var parameter = Expression.Parameter(typeof(T));
+            var memberAccess = Expression.MakeMemberAccess(parameter, field);
+            var expression = field.FieldType.IsValueType 
+                ? Expression.Convert(memberAccess, typeof(object)) 
+                : (Expression)memberAccess;
+            var lambda = Expression.Lambda<Func<T, object>>(expression, parameter);
+            return lambda.Compile();
+        }
+
         public static Func<T, TR> CreateGetter<T, TR>(this Expression<Func<T, TR>> accessExpression)
         {
             if (accessExpression == null)
@@ -29,6 +93,10 @@ namespace kalexi.Expressions.Utilities
             var lambda = Expression.Lambda<Func<T, TR>>(memberAccess, parameter);
             return lambda.Compile();
         }
+
+        #endregion
+
+        #region Setters
 
         public static Action<T, TR> CreateSetter<T, TR>(this Expression<Func<T, TR>> accessExpression)
         {
@@ -44,6 +112,64 @@ namespace kalexi.Expressions.Utilities
             var lambda = Expression.Lambda<Action<T, TR>>(assignment, itemParameter, valueParameter);
             return lambda.Compile();
         }
+
+        public static Action<object, object> CreateUntypedSetter(this PropertyInfo property)
+        {
+            if (property == null)
+            {
+                throw new ArgumentNullException(nameof(property));
+            }
+            var itemParameter = Expression.Parameter(typeof(object));
+            var valueParameter = Expression.Parameter(typeof(object));
+            var memberAccess = Expression.MakeMemberAccess(Expression.Convert(itemParameter, property.DeclaringType), property);
+            var assignment = Expression.Assign(memberAccess, Expression.Convert(valueParameter, property.PropertyType));
+            var lambda = Expression.Lambda<Action<object, object>>(assignment, itemParameter, valueParameter);
+            return lambda.Compile();
+        }
+
+        public static Action<object, object> CreateUntypedSetter(this FieldInfo field)
+        {
+            if (field == null)
+            {
+                throw new ArgumentNullException(nameof(field));
+            }
+            var itemParameter = Expression.Parameter(typeof(object));
+            var valueParameter = Expression.Parameter(typeof(object));
+            var memberAccess = Expression.MakeMemberAccess(Expression.Convert(itemParameter, field.DeclaringType), field);
+            var assignment = Expression.Assign(memberAccess, Expression.Convert(valueParameter, field.FieldType));
+            var lambda = Expression.Lambda<Action<object, object>>(assignment, itemParameter, valueParameter);
+            return lambda.Compile();
+        }
+
+        public static Action<T, object> CreateSetter<T>(this PropertyInfo property)
+        {
+            if (property == null)
+            {
+                throw new ArgumentNullException(nameof(property));
+            }
+            var itemParameter = Expression.Parameter(typeof(T));
+            var valueParameter = Expression.Parameter(typeof(object));
+            var memberAccess = Expression.MakeMemberAccess(itemParameter, property);
+            var assignment = Expression.Assign(memberAccess, Expression.Convert(valueParameter, property.PropertyType));
+            var lambda = Expression.Lambda<Action<T, object>>(assignment, itemParameter, valueParameter);
+            return lambda.Compile();
+        }
+
+        public static Action<T, object> CreateSetter<T>(this FieldInfo field)
+        {
+            if (field == null)
+            {
+                throw new ArgumentNullException(nameof(field));
+            }
+            var itemParameter = Expression.Parameter(typeof(T));
+            var valueParameter = Expression.Parameter(typeof(object));
+            var memberAccess = Expression.MakeMemberAccess(itemParameter, field);
+            var assignment = Expression.Assign(memberAccess, Expression.Convert(valueParameter, field.FieldType));
+            var lambda = Expression.Lambda<Action<T, object>>(assignment, itemParameter, valueParameter);
+            return lambda.Compile();
+        }
+
+        #endregion
 
         public static PropertyInfo GetProperty<T, TR>(this Expression<Func<T, TR>> accessExpression)
         {
