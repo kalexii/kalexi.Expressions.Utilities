@@ -1,11 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;netcoreapp2.0;net40</TargetFrameworks>
     <AssemblyVersion>1.0.0.1</AssemblyVersion>
     <FileVersion>1.0.0.1</FileVersion>
     <Version>1.0.1</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>kalexi</Authors>
+    <Company></Company>
+    <Product />
+    <Description>Utilities for working with .NET's expression trees.</Description>
+    <PackageProjectUrl>https://github.com/kalexii/kalexi.Expressions.Utilities</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/kalexii/kalexi.Expressions.Utilities.git</RepositoryUrl>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
   </PropertyGroup>
-
 </Project>
