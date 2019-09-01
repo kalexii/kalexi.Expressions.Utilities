@@ -18,3 +18,7 @@ This library contains utility methods that are applicable to scenarios with diff
 - Ability to create getter or setter for reference or value type property or field using either it's `PropertyInfo`/`FieldInfo` or `Func<T, TResult>`. You can use `Func<T,TResult>`, `Func<T, object>` or `Func<object, object>` - whatever your situation is.
 
 For usage example, check the [unit tests](https://github.com/kalexii/kalexi.Expressions.Utilities/blob/master/kalexi.Expressions.Utilities.Tests/ExpressionUtilitiesTests.cs).
+
+Todo:
+ - expand on this doc, add examples
+ - include documentation and debug symbols into nuget package
