@@ -440,7 +440,7 @@ namespace kalexi.Expressions.Utilities.Tests
 
             MethodInfo methodInfo = expression.GetMethodInfo();
 
-            Assert.That(methodInfo, Is.EqualTo(GetMethodbyName<Dummy>(nameof(Dummy.VoidMethod))));
+            Assert.That(methodInfo, Is.EqualTo(GetMethodByName<Dummy>(nameof(Dummy.VoidMethod))));
         }
 
         [Test]
@@ -450,7 +450,7 @@ namespace kalexi.Expressions.Utilities.Tests
 
             MethodInfo methodInfo = expression.GetMethodInfo();
 
-            Assert.That(methodInfo, Is.EqualTo(GetMethodbyName<Dummy>(nameof(Dummy.StringMethod))));
+            Assert.That(methodInfo, Is.EqualTo(GetMethodByName<Dummy>(nameof(Dummy.StringMethod))));
         }
 
         [Test]
@@ -460,7 +460,7 @@ namespace kalexi.Expressions.Utilities.Tests
 
             MethodInfo methodInfo = expression.GetMethodInfo();
 
-            Assert.That(methodInfo, Is.EqualTo(GetMethodbyName<Dummy>(nameof(Dummy.IntMethod))));
+            Assert.That(methodInfo, Is.EqualTo(GetMethodByName<Dummy>(nameof(Dummy.IntMethod))));
         }
 
         #endregion
@@ -471,7 +471,7 @@ namespace kalexi.Expressions.Utilities.Tests
 
         private static PropertyInfo GetPropertyByName<T>(string name) => typeof(T).GetProperty(name);
 
-        private static MethodInfo GetMethodbyName<T>(string name) => typeof(T).GetMethod(name);
+        private static MethodInfo GetMethodByName<T>(string name) => typeof(T).GetMethod(name);
 
         #endregion
     }

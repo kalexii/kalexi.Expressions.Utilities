@@ -14,6 +14,7 @@ namespace kalexi.Expressions.Utilities
             {
                 throw new ArgumentNullException(nameof(property));
             }
+
             var parameter = Expression.Parameter(typeof(object));
             var typedParameter = Expression.Convert(parameter, property.DeclaringType);
             var memberAccess = Expression.MakeMemberAccess(typedParameter, property);
@@ -30,6 +31,7 @@ namespace kalexi.Expressions.Utilities
             {
                 throw new ArgumentNullException(nameof(field));
             }
+
             var parameter = Expression.Parameter(typeof(object));
             var typedParameter = Expression.Convert(parameter, field.DeclaringType);
             var memberAccess = Expression.MakeMemberAccess(typedParameter, field);
@@ -46,6 +48,7 @@ namespace kalexi.Expressions.Utilities
             {
                 throw new ArgumentNullException(nameof(property));
             }
+
             var parameter = Expression.Parameter(typeof(T));
             var memberAccess = Expression.MakeMemberAccess(parameter, property);
             var expression = property.PropertyType.IsValueType
@@ -61,6 +64,7 @@ namespace kalexi.Expressions.Utilities
             {
                 throw new ArgumentNullException(nameof(field));
             }
+
             var parameter = Expression.Parameter(typeof(T));
             var memberAccess = Expression.MakeMemberAccess(parameter, field);
             var expression = field.FieldType.IsValueType
@@ -76,6 +80,7 @@ namespace kalexi.Expressions.Utilities
             {
                 throw new ArgumentNullException(nameof(accessExpression));
             }
+
             var property = accessExpression.GetMemberInfo();
             var parameter = Expression.Parameter(typeof(T));
             var memberAccess = Expression.MakeMemberAccess(parameter, property);
@@ -93,6 +98,7 @@ namespace kalexi.Expressions.Utilities
             {
                 throw new ArgumentNullException(nameof(accessExpression));
             }
+
             var property = accessExpression.GetMemberInfo();
             var itemParameter = Expression.Parameter(typeof(T));
             var valueParameter = Expression.Parameter(typeof(TR));
@@ -108,6 +114,7 @@ namespace kalexi.Expressions.Utilities
             {
                 throw new ArgumentNullException(nameof(property));
             }
+
             var itemParameter = Expression.Parameter(typeof(object));
             var valueParameter = Expression.Parameter(typeof(object));
             var memberAccess = Expression.MakeMemberAccess(Expression.Convert(itemParameter, property.DeclaringType),
@@ -123,9 +130,11 @@ namespace kalexi.Expressions.Utilities
             {
                 throw new ArgumentNullException(nameof(field));
             }
+
             var itemParameter = Expression.Parameter(typeof(object));
             var valueParameter = Expression.Parameter(typeof(object));
-            var memberAccess = Expression.MakeMemberAccess(Expression.Convert(itemParameter, field.DeclaringType), field);
+            var memberAccess =
+                Expression.MakeMemberAccess(Expression.Convert(itemParameter, field.DeclaringType), field);
             var assignment = Expression.Assign(memberAccess, Expression.Convert(valueParameter, field.FieldType));
             var lambda = Expression.Lambda<Action<object, object>>(assignment, itemParameter, valueParameter);
             return lambda.Compile();
@@ -137,6 +146,7 @@ namespace kalexi.Expressions.Utilities
             {
                 throw new ArgumentNullException(nameof(property));
             }
+
             var itemParameter = Expression.Parameter(typeof(T));
             var valueParameter = Expression.Parameter(typeof(object));
             var memberAccess = Expression.MakeMemberAccess(itemParameter, property);
@@ -151,6 +161,7 @@ namespace kalexi.Expressions.Utilities
             {
                 throw new ArgumentNullException(nameof(field));
             }
+
             var itemParameter = Expression.Parameter(typeof(T));
             var valueParameter = Expression.Parameter(typeof(object));
             var memberAccess = Expression.MakeMemberAccess(itemParameter, field);
@@ -167,6 +178,7 @@ namespace kalexi.Expressions.Utilities
             {
                 throw new ArgumentNullException(nameof(accessExpression));
             }
+
             var memberExpression = accessExpression.Body.GetMemberExpression();
             return memberExpression.Member;
         }
@@ -177,6 +189,7 @@ namespace kalexi.Expressions.Utilities
             {
                 throw new ArgumentNullException(nameof(accessExpression));
             }
+
             var memberExpression = accessExpression.Body.GetMemberExpression();
             return memberExpression.Member;
         }
@@ -199,6 +212,7 @@ namespace kalexi.Expressions.Utilities
             {
                 throw new ArgumentNullException(nameof(accessExpression));
             }
+
             var e = accessExpression.Body is UnaryExpression unaryExpression
                 ? (MethodCallExpression) unaryExpression.Operand
                 : (MethodCallExpression) accessExpression.Body;
@@ -211,6 +225,7 @@ namespace kalexi.Expressions.Utilities
             {
                 throw new ArgumentNullException(nameof(accessExpression));
             }
+
             var e = (MethodCallExpression) accessExpression.Body;
             return e.Method;
         }
@@ -223,6 +238,7 @@ namespace kalexi.Expressions.Utilities
             {
                 throw new ArgumentNullException(nameof(bodyExpression));
             }
+
             return bodyExpression is UnaryExpression unaryExpression
                 ? (MemberExpression) unaryExpression.Operand
                 : (MemberExpression) bodyExpression;
