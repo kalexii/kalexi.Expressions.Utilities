@@ -1,11 +1,33 @@
 ﻿using System;
 using System.Linq.Expressions;
 using System.Reflection;
+#if NETSTANDARD
+using FastExpressionCompiler;
+
+#endif
 
 namespace kalexi.Expressions.Utilities
 {
     public static class ExpressionUtilities
     {
+        private static Func<T, TResult> TryCompileFast<T, TResult>(this Expression<Func<T, TResult>> expression)
+        {
+#if NETSTANDARD
+            return expression.CompileFast();
+#else
+            return expression.Compile();
+#endif
+        }
+
+        private static Action<T, TResult> TryCompileFast<T, TResult>(this Expression<Action<T, TResult>> expression)
+        {
+#if NETSTANDARD
+            return expression.CompileFast();
+#else
+            return expression.Compile();
+#endif
+        }
+
         #region Getters
 
         public static Func<object, object> CreateUntypedGetter(this PropertyInfo property)
@@ -22,7 +44,7 @@ namespace kalexi.Expressions.Utilities
                 ? Expression.Convert(memberAccess, typeof(object))
                 : (Expression) memberAccess;
             var lambda = Expression.Lambda<Func<object, object>>(expression, parameter);
-            return lambda.Compile();
+            return lambda.TryCompileFast();
         }
 
         public static Func<object, object> CreateUntypedGetter(this FieldInfo field)
@@ -39,7 +61,7 @@ namespace kalexi.Expressions.Utilities
                 ? Expression.Convert(memberAccess, typeof(object))
                 : (Expression) memberAccess;
             var lambda = Expression.Lambda<Func<object, object>>(expression, parameter);
-            return lambda.Compile();
+            return lambda.TryCompileFast();
         }
 
         public static Func<T, object> CreateGetter<T>(this PropertyInfo property)
@@ -55,7 +77,7 @@ namespace kalexi.Expressions.Utilities
                 ? Expression.Convert(memberAccess, typeof(object))
                 : (Expression) memberAccess;
             var lambda = Expression.Lambda<Func<T, object>>(expression, parameter);
-            return lambda.Compile();
+            return lambda.TryCompileFast();
         }
 
         public static Func<T, object> CreateGetter<T>(this FieldInfo field)
@@ -71,7 +93,7 @@ namespace kalexi.Expressions.Utilities
                 ? Expression.Convert(memberAccess, typeof(object))
                 : (Expression) memberAccess;
             var lambda = Expression.Lambda<Func<T, object>>(expression, parameter);
-            return lambda.Compile();
+            return lambda.TryCompileFast();
         }
 
         public static Func<T, TR> CreateGetter<T, TR>(this Expression<Func<T, TR>> accessExpression)
@@ -85,7 +107,7 @@ namespace kalexi.Expressions.Utilities
             var parameter = Expression.Parameter(typeof(T));
             var memberAccess = Expression.MakeMemberAccess(parameter, property);
             var lambda = Expression.Lambda<Func<T, TR>>(memberAccess, parameter);
-            return lambda.Compile();
+            return lambda.TryCompileFast();
         }
 
         #endregion
@@ -105,7 +127,7 @@ namespace kalexi.Expressions.Utilities
             var memberAccess = Expression.MakeMemberAccess(itemParameter, property);
             var assignment = Expression.Assign(memberAccess, valueParameter);
             var lambda = Expression.Lambda<Action<T, TR>>(assignment, itemParameter, valueParameter);
-            return lambda.Compile();
+            return lambda.TryCompileFast();
         }
 
         public static Action<object, object> CreateUntypedSetter(this PropertyInfo property)
@@ -121,7 +143,7 @@ namespace kalexi.Expressions.Utilities
                 property);
             var assignment = Expression.Assign(memberAccess, Expression.Convert(valueParameter, property.PropertyType));
             var lambda = Expression.Lambda<Action<object, object>>(assignment, itemParameter, valueParameter);
-            return lambda.Compile();
+            return lambda.TryCompileFast();
         }
 
         public static Action<object, object> CreateUntypedSetter(this FieldInfo field)
@@ -137,7 +159,7 @@ namespace kalexi.Expressions.Utilities
                 Expression.MakeMemberAccess(Expression.Convert(itemParameter, field.DeclaringType), field);
             var assignment = Expression.Assign(memberAccess, Expression.Convert(valueParameter, field.FieldType));
             var lambda = Expression.Lambda<Action<object, object>>(assignment, itemParameter, valueParameter);
-            return lambda.Compile();
+            return lambda.TryCompileFast();
         }
 
         public static Action<T, object> CreateSetter<T>(this PropertyInfo property)
@@ -152,7 +174,7 @@ namespace kalexi.Expressions.Utilities
             var memberAccess = Expression.MakeMemberAccess(itemParameter, property);
             var assignment = Expression.Assign(memberAccess, Expression.Convert(valueParameter, property.PropertyType));
             var lambda = Expression.Lambda<Action<T, object>>(assignment, itemParameter, valueParameter);
-            return lambda.Compile();
+            return lambda.TryCompileFast();
         }
 
         public static Action<T, object> CreateSetter<T>(this FieldInfo field)
@@ -167,7 +189,7 @@ namespace kalexi.Expressions.Utilities
             var memberAccess = Expression.MakeMemberAccess(itemParameter, field);
             var assignment = Expression.Assign(memberAccess, Expression.Convert(valueParameter, field.FieldType));
             var lambda = Expression.Lambda<Action<T, object>>(assignment, itemParameter, valueParameter);
-            return lambda.Compile();
+            return lambda.TryCompileFast();
         }
 
         #endregion

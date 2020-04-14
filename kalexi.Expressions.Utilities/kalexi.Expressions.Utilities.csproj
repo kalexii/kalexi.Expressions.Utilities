@@ -1,17 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netcoreapp2.0;net40</TargetFrameworks>
-    <AssemblyVersion>1.0.0.1</AssemblyVersion>
-    <FileVersion>1.0.0.1</FileVersion>
-    <Version>1.0.1</Version>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Authors>kalexi</Authors>
-    <Company></Company>
-    <Product />
-    <Description>Utilities for working with .NET's expression trees.</Description>
-    <PackageProjectUrl>https://github.com/kalexii/kalexi.Expressions.Utilities</PackageProjectUrl>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/kalexii/kalexi.Expressions.Utilities.git</RepositoryUrl>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFrameworks>net40;net45;netstandard2.0</TargetFrameworks>
+        <AssemblyVersion>1.0.0.1</AssemblyVersion>
+        <FileVersion>1.0.0.1</FileVersion>
+        <Version>1.0.1</Version>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Authors>kalexi</Authors>
+        <Company>kalexi</Company>
+        <Product/>
+        <Description>Utilities for working with .NET's expression trees.</Description>
+        <PackageProjectUrl>https://github.com/kalexii/kalexi.Expressions.Utilities</PackageProjectUrl>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/kalexii/kalexi.Expressions.Utilities.git</RepositoryUrl>
+        <PackageLicenseUrl>https://licenses.nuget.org/MIT</PackageLicenseUrl>
+        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="FastExpressionCompiler" Version="2.0.0" Condition="'$(TargetFramework)' == 'net45'"/>
+        <PackageReference Include="FastExpressionCompiler" Version="2.0.0" Condition="'$(TargetFramework)' == 'netstandard2.0'"/>
+    </ItemGroup>
 </Project>
